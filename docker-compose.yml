@@ -17,25 +17,33 @@ services:
     stdin_open: true
     tty: true
     restart: unless-stopped
+    networks:
+      - minecraft
 
   corsProxy:
-    image: redocly/cors-anywhere
-    environment:
-      - PORT: 1000
+    image: nginx:1.29.1
     ports:
-      - "1000:1000"
-    commands:
-      - "npm start"
-    
-
+      - "80:8080"
+    volumes:
+      - ./DjangoWeb/nginx/nginx-setup.conf:/etc/nginx/conf.d/default.conf:ro
+    depends_on:
+      - mc
+      - frontend
+    networks:
+      - minecraft
   frontend:
-    build: ./DjangoWeb
+    build: ./DjangoWeb/mcapi
     ports:
       - "8000:8000"
     environment:
       - DJANGO_SETTINGS_MODULE=mcapi.settings
+    networks:
+      - minecraft
     
 
 
 volumes:
   minecraftdata: {}
+
+networks:
+  minecraft:
