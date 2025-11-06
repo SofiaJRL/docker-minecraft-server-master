@@ -1,0 +1,89 @@
+# --- Python bytecode / cache ---
+__pycache__/
+*.py[cod]
+*$py.class
+
+# --- Virtual environments ---
+.venv/
+venv/
+env/
+ENV/
+env.bak/
+venv.bak/
+
+# --- Django / project artifacts ---
+*.log
+local_settings.py
+db.sqlite3
+db.sqlite3-journal
+
+# Static & media (adjust to your setup)
+# Track your source /app/static/ if you keep assets there.
+# Ignore only the collected dir(s):
+/staticfiles/
+/static_root/
+/media/
+
+# --- Environment & secrets ---
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.crt
+*.cert
+*.p12
+*.pfx
+
+# --- Packaging / build ---
+.build/
+build/
+dist/
+downloads/
+.eggs/
+*.egg-info/
+MANIFEST
+
+# --- Testing / coverage ---
+.pytest_cache/
+.tox/
+.nox/
+.coverage
+.coverage.*
+htmlcov/
+nosetests.xml
+coverage.xml
+*.cover
+*.py,cover
+.hypothesis/
+.cache/
+
+# --- Type checkers ---
+.mypy_cache/
+.pyre/
+.pytype/
+
+# --- Editors / OS ---
+.vscode/
+.idea/
+*.iml
+*.sublime-*
+*.swp
+*.swo
+.DS_Store
+Thumbs.db
+
+# --- pyenv ---
+.python-version
+
+# --- Installer logs ---
+pip-log.txt
+pip-delete-this-directory.txt
+
+# --- Docker (local overrides) ---
+docker-compose.override.yml
+*.local.yml
+
+# --- Celery (if used) ---
+celerybeat-schedule
+celerybeat.pid

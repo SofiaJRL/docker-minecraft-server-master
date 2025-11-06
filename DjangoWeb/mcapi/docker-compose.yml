@@ -1,0 +1,7 @@
+services:
+  mcapi:
+    build: .
+    ports:
+      - "8000:8000"
+    environment:
+      - DJANGO_SETTINGS_MODULE=mcapi.settings

@@ -8,14 +8,34 @@ services:
       FORGE_VERSION: "60.0.15"
 
     ports:
-      - "25565:25565"
+      - "25565:25565" # MINECRAFT SERVER
+      - "7000:7000" # API REST
     volumes:
       - minecraftdata:/data
       - ./Minecraft/plugins:/data/plugins
       - ./Minecraft/mods:/mods
-      
     stdin_open: true
     tty: true
     restart: unless-stopped
+
+  corsProxy:
+    image: redocly/cors-anywhere
+    environment:
+      - PORT: 1000
+    ports:
+      - "1000:1000"
+    commands:
+      - "npm start"
+    
+
+  frontend:
+    build: ./DjangoWeb
+    ports:
+      - "8000:8000"
+    environment:
+      - DJANGO_SETTINGS_MODULE=mcapi.settings
+    
+
+
 volumes:
   minecraftdata: {}
