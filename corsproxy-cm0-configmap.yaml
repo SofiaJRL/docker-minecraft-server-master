@@ -1,0 +1,10 @@
+apiVersion: v1
+data:
+  nginx-setup.conf: "upstream v1  {\n    server mc:7000;\n}\n\nserver {\n    listen 8080;\n\n    location / {\n        proxy_pass http://frontend:8000;\n        proxy_set_header Host $Host;\n        proxy_set_header Connection \"\";  \n    }\n\n    location /v1 {\n        proxy_pass http://v1;\n        proxy_set_header Host $Host;\n        proxy_set_header Connection \"\";  \n    }\n}"
+kind: ConfigMap
+metadata:
+  annotations:
+    use-subpath: "true"
+  labels:
+    io.kompose.service: corsproxy
+  name: corsproxy-cm0

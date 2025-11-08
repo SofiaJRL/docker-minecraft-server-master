@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose convert
+    kompose.version: 1.37.0 (fb0539e64)
+  labels:
+    io.kompose.service: corsproxy
+  name: corsproxy
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: corsproxy
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: kompose convert
+        kompose.version: 1.37.0 (fb0539e64)
+      labels:
+        io.kompose.service: corsproxy
+    spec:
+      containers:
+        - image: nginx:1.29.1
+          name: corsproxy
+          ports:
+            - containerPort: 8080
+              protocol: TCP
+          volumeMounts:
+            - mountPath: /etc/nginx/conf.d/default.conf
+              name: corsproxy-cm0
+              readOnly: true
+              subPath: default.conf
+      restartPolicy: Always
+      volumes:
+        - configMap:
+            items:
+              - key: nginx-setup.conf
+                path: default.conf
+            name: corsproxy-cm0
+          name: corsproxy-cm0

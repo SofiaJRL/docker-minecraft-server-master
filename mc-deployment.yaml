@@ -1,0 +1,56 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose convert
+    kompose.version: 1.37.0 (fb0539e64)
+  labels:
+    io.kompose.service: mc
+  name: mc
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: mc
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: kompose convert
+        kompose.version: 1.37.0 (fb0539e64)
+      labels:
+        io.kompose.service: mc
+    spec:
+      containers:
+        - env:
+            - name: EULA
+              value: "true"
+            - name: FORGE_VERSION
+              value: 60.0.15
+            - name: TYPE
+              value: YOUER
+            - name: VERSION
+              value: 1.21.1
+          image: itzg/minecraft-server
+          name: mc
+          ports:
+            - containerPort: 25565
+              protocol: TCP
+            - containerPort: 7000
+              protocol: TCP
+          stdin: true
+          tty: true
+          volumeMounts:
+            - mountPath: /data
+              name: minecraftdata
+            - mountPath: /mods
+              name: mc-claim2
+      restartPolicy: Always
+      volumes:
+        - name: minecraftdata
+          persistentVolumeClaim:
+            claimName: minecraftdata
+        - name: mc-claim2
+          persistentVolumeClaim:
+            claimName: mc-claim2
