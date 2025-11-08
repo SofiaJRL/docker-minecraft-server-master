@@ -1,0 +1,13 @@
+.git
+.github/
+**/*.jar
+**/*.zip
+**/*.tgz
+node_modules/
+dist/
+build/
+.venv/
+venv/
+backups/
+world/
+assets/
